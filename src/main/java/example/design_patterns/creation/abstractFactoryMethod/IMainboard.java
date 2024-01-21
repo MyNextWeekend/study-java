@@ -1,0 +1,6 @@
+package example.design_patterns.creation.abstractFactoryMethod;
+
+public interface IMainboard {
+    void installCPU();
+
+}
