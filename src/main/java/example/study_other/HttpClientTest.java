@@ -13,8 +13,11 @@ import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * @author weekend
+ */
 public class HttpClientTest {
-    private static Logger logger = LoggerFactory.getLogger(HttpClientTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(HttpClientTest.class);
 
     @Test
     public void test01() {
