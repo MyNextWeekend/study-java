@@ -6,6 +6,9 @@ import org.junit.Test;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+/**
+ * @author weekend
+ */
 @Slf4j
 public class ThreadTest {
 
@@ -104,8 +107,7 @@ public class ThreadTest {
         try {
             value = task.get(); //如果子线程异常没有返回值，这里会报错
         } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
+            log.error("获取值异常：",e);
             value = 1;
 
         }
