@@ -30,20 +30,14 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
+            <version>1.18.24</version>
         </dependency>
 
-        <!--日志门面-->
+        <!--日志工具-->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>2.0.9</version>
-        </dependency>
-        <!--日志实现-->
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>slf4j-logback</artifactId>
-            <version>2.1.28</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.11</version>
         </dependency>
         <!--excel解析工具-->
         <dependency>

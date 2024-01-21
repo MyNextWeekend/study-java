@@ -1,10 +1,12 @@
 package example.study;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+@Slf4j
 public class ThreadTest {
 
     /**
@@ -18,7 +20,7 @@ public class ThreadTest {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println(Thread.currentThread().getName() + "start...");
+            log.info(Thread.currentThread().getName() + "start...");
         };
 
         Thread t1 = new Thread(runnable, "t1-");
@@ -30,7 +32,7 @@ public class ThreadTest {
         t1.join(); //阻塞主线程，等待子线程结束
         t2.join(); //阻塞主线程，等待子线程结束
         t3.join(); //阻塞主线程，等待子线程结束
-        System.out.println("end");
+        log.info("end");
 
     }
 
@@ -46,18 +48,17 @@ public class ThreadTest {
                 throw new RuntimeException(e);
             }
             Integer a = 1 / 0;
-            System.out.println(Thread.currentThread().getName() + "start...");
+            log.info(Thread.currentThread().getName() + "start...");
         };
 
         Thread t1 = new Thread(runnable, "t1-");
         t1.setUncaughtExceptionHandler( // 子线程如果报错自动调用方法
                 (Thread t, Throwable e) -> {
-                    System.out.println("MyDefaultExceptionHandler: Thread: " +
-                            t.getName() + ", Message: " + e.getMessage());
+                    log.info("MyDefaultExceptionHandler: Thread: " + t.getName() + ", Message: " + e.getMessage());
                 });
         t1.start();
         t1.join(); //阻塞主线程，等待子线程结束
-        System.out.println("end");
+        log.info("end");
 
     }
 
@@ -72,13 +73,13 @@ public class ThreadTest {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println(Thread.currentThread().getName() + "start...");
+            log.info(Thread.currentThread().getName() + "start...");
             return 3;
         });
 
         new Thread(task, "t1-").start(); // 由于有返回值，不需要采用join的方式等待子线程结束
         Integer value = task.get(); //会阻塞主线程直到拿到结果
-        System.out.println("获取结果是: " + value);
+        log.info("获取结果是: " + value);
 
     }
 
@@ -94,7 +95,7 @@ public class ThreadTest {
                 throw new RuntimeException(e);
             }
             Integer a = 1 / 0;
-            System.out.println(Thread.currentThread().getName() + "start...");
+            log.info(Thread.currentThread().getName() + "start...");
             return 3;
         });
 
@@ -103,11 +104,12 @@ public class ThreadTest {
         try {
             value = task.get(); //如果子线程异常没有返回值，这里会报错
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage());
+            e.printStackTrace();
             value = 1;
 
         }
-        System.out.println("获取结果是: " + value);
+        log.info("获取结果是: " + value);
 
     }
 }
