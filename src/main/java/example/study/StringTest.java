@@ -2,6 +2,8 @@ package example.study;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 public class StringTest {
     /**
      * 1、String.trim()：
