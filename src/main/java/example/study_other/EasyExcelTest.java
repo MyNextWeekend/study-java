@@ -16,7 +16,7 @@ public class EasyExcelTest {
     @Test
     public void testWriteExcel() {
         ArrayList<UserExcelDto> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             UserExcelDto userExcelDto = new UserExcelDto();
             userExcelDto.setUserName("字符串" + i);
             userExcelDto.setBirthday(new Date());
@@ -25,7 +25,7 @@ public class EasyExcelTest {
         }
 
         String fileName = PathUtil.getPath() + "demo.xlsx";
-        EasyExcel.write(fileName).sheet("用户信息").    doWrite(list);
+        EasyExcel.write(fileName).sheet("用户信息").doWrite(list);
     }
 
     @Test
