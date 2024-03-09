@@ -1,4 +1,4 @@
-package example.study_other;
+package example.study_other.easy_excel;
 
 import com.alibaba.excel.EasyExcel;
 import example.dto.UserExcelDto;
