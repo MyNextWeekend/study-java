@@ -19,12 +19,9 @@ public class ProxyTest {
     public static void main(String[] args) {
         ClassLoader loader = IHello.class.getClassLoader();
         Class<?>[] classes = {IHello.class};
-        InvocationHandler invocationHandler = new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                System.out.println("代理方法执行");
-                return null;
-            }
+        InvocationHandler invocationHandler = (proxy, method, handler) -> {
+            System.out.println("代理方法执行");
+            return null;
         };
 
 
