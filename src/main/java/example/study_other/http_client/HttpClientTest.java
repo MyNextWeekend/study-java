@@ -1,9 +1,10 @@
-package example.study_other;
+package example.study_other.http_client;
 
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -31,13 +32,20 @@ public class HttpClientTest {
         CloseableHttpClient client = HttpClients.createDefault();
         CloseableHttpResponse response = null;
         try {
+            // url参数
             URIBuilder builder = new URIBuilder(url);
             builder.addParameter("aa", "bb");
             URI uri = builder.build();
 
+            // 请求方式
             HttpPost request = new HttpPost(uri);
 
-            request.setConfig(RequestConfig.custom()
+            // 请求体
+            StringEntity entity = new StringEntity("{\"name\":\"zhangsan\"}");
+            entity.setContentType("application/json"); // 请求头
+            request.setEntity(entity);
+
+            request.setConfig(RequestConfig.custom() // 设置请求配置
                     .setConnectionRequestTimeout(5000) // 请求超时时间
                     .setConnectTimeout(5000) // 连接超时时间
                     .setSocketTimeout(5000) // 响应超时时间
