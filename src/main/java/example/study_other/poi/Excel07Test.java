@@ -1,10 +1,7 @@
 package example.study_other.poi;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
@@ -18,13 +15,52 @@ import java.nio.file.Paths;
 public class Excel07Test {
     @Test
     public void readExcel() throws Exception {
-        FileInputStream inputStream = new FileInputStream("./test.xlsx"); // 打开文件流
-        Workbook workbook = new XSSFWorkbook(inputStream); // 打开工作薄
-        Sheet sheet = workbook.getSheetAt(0);   // 获取第一个工作表
-        Row row = sheet.getRow(0);  // 获取第一行
-        Cell cell = row.getCell(0); // 获取第一列
-        log.info(cell.getStringCellValue()); // 获取单元格的值
-        inputStream.close();    // 关闭流
+        String xlsxFile = "/Users/weekend/Desktop/test.xlsx";
+        FileInputStream inputStream = new FileInputStream(xlsxFile);
+        // 打开工作薄
+        Workbook workbook = new XSSFWorkbook(inputStream);
+        for (Sheet rows : workbook) {
+            for (Row row : rows) {
+                for (Cell cell : row) {
+                    cell.setCellType(CellType.STRING);
+                    log.info("cell:{}", cell.getStringCellValue());
+                    if ("324".equals(cell.getStringCellValue())){
+                        // 创建一个新的RichTextString对象
+                        RichTextString richText = workbook.getCreationHelper().createRichTextString(cell.getStringCellValue());
+                        // 创建一个红色字体样式
+                        Font redFont = workbook.createFont();
+                        redFont.setColor(IndexedColors.RED.getIndex());
+
+                        richText.applyFont(redFont);
+                        cell.setCellValue(richText);
+                    }
+                }
+            }
+        }
+
+        String outputFile = "/Users/weekend/Desktop/new.xlsx";
+        // 写入修改后的Excel文件
+        workbook.write(Files.newOutputStream(Paths.get(outputFile)));
+
+    }
+
+
+    private static void processCell(Cell cell) {
+        // 根据单元格类型获取其值
+        switch (cell.getCellType()) {
+            case STRING:
+                log.info("String value: {}", cell.getStringCellValue());
+                break;
+            case NUMERIC:
+                log.info("Numeric value: {}", cell.getNumericCellValue());
+                break;
+            case BOOLEAN:
+                log.info("Boolean value: {}", cell.getBooleanCellValue());
+                break;
+            // ... 其他类型处理（如日期、公式等）
+            default:
+                log.info("Unsupported cell type encountered.");
+        }
     }
 
     @Test
