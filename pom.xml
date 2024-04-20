@@ -72,6 +72,11 @@
             <artifactId>poi</artifactId>
             <version>4.1.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-scratchpad</artifactId>
+            <version>4.1.2</version>
+        </dependency>
         <!--单元测试-->
         <dependency>
             <groupId>junit</groupId>

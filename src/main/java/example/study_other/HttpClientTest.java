@@ -1,5 +1,6 @@
 package example.study_other;
 
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
@@ -35,12 +36,19 @@ public class HttpClientTest {
             URI uri = builder.build();
 
             HttpPost request = new HttpPost(uri);
+
+            request.setConfig(RequestConfig.custom()
+                    .setConnectionRequestTimeout(5000) // 请求超时时间
+                    .setConnectTimeout(5000) // 连接超时时间
+                    .setSocketTimeout(5000) // 响应超时时间
+                    .build());
+
             response = client.execute(request);
             if (response.getStatusLine().getStatusCode() == 200) {
                 result = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             }
         } catch (Exception e) {
-            logger.error("request err: ",e);
+            logger.error("request err: ", e);
         } finally {
             try {
                 if (response != null) {
@@ -48,7 +56,7 @@ public class HttpClientTest {
                 }
                 client.close();
             } catch (Exception e) {
-                logger.error("response close err: ",e);
+                logger.error("response close err: ", e);
             }
         }
         return result;
