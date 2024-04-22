@@ -24,15 +24,18 @@ public class Excel07Test {
                 for (Cell cell : row) {
                     cell.setCellType(CellType.STRING);
                     log.info("cell:{}", cell.getStringCellValue());
-                    if ("324".equals(cell.getStringCellValue())){
-                        // 创建一个新的RichTextString对象
-                        RichTextString richText = workbook.getCreationHelper().createRichTextString(cell.getStringCellValue());
-                        // 创建一个红色字体样式
-                        Font redFont = workbook.createFont();
-                        redFont.setColor(IndexedColors.RED.getIndex());
+                    if ("为何唯独你这么优秀".equals(cell.getStringCellValue())) {
+                        RichTextString richStringCellValue = cell.getRichStringCellValue();
+                        // 创建一个字体样式
+                        Font font = workbook.createFont();
+                        font.setColor(IndexedColors.RED.getIndex());
+                        // 指定索引位置红色文字
+                        richStringCellValue.applyFont(2, 4, font);
+                        // 指定索引位置红色文字
+                        richStringCellValue.applyFont(6, 7, font);
 
-                        richText.applyFont(redFont);
-                        cell.setCellValue(richText);
+                        // 将RichTextString设置到单元格中
+                        cell.setCellValue(richStringCellValue);
                     }
                 }
             }
